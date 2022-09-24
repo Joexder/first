@@ -1,0 +1,243 @@
+CRATE DATABASE dbModelamiento;
+
+USE dbModelamiento;
+
+CREATE TABLE estudiante(
+id INT PRIMARY KEY,
+nombre VARCHAR(25),
+apellido VARCHAR(25),
+f_nacimiento DATE
+);
+
+CREATE TABLE asignatura(
+id INT PRIMARY KEY,
+descripcion VARCHAR(25)
+);
+
+CREATE TABLE notas(
+id INT PRIMARY KEY,
+estudiante_id INT,
+nota INT,
+asignatura_id INT,
+f_examen DATE,
+FOREIGN KEY(estudiante_id) REFERENCES estudiante(id),
+FOREIGN KEY(asignatura_id) REFERENCES asignatura(id)
+);
+
+CREATE TABLE obra_social(
+id INT PRIMARY KEY,
+descripcion VARCHAR(25),
+horas INT,
+estudiante_id INT,
+FOREIGN KEY(estudiante_id) REFERENCES estudiante(id)
+);
+
+
+-------------------ESTUDIANTES----------------------------
+
+INSERT INTO estudiante(id, nombre, apellido, f_nacimiento)
+VALUES(1000,"Jorge","Bolaños","1997/08/25");
+
+INSERT INTO estudiante(id, nombre, apellido, f_nacimiento)
+VALUES(1001,"Mauricio","Fuentes","1999/02/22");
+
+INSERT INTO estudiante(id, nombre, apellido, f_nacimiento)
+VALUES(1002,"Eugenia","Calvimontes","1998/11/4");
+
+INSERT INTO estudiante(id, nombre, apellido, f_nacimiento)
+VALUES(1003,"Eva","Gomez","1999/1/17");
+
+
+
+-------------------ASIGNATURAS----------------------------
+
+INSERT INTO asignatura(id,descripcion)
+VALUES(2020, "GEOMETRIA");
+
+INSERT INTO asignatura(id,descripcion)
+VALUES(1010, "ALGEBRA");
+
+INSERT INTO asignatura(id,descripcion)
+VALUES(3030, "IDIOMAS");
+
+INSERT INTO asignatura(id,descripcion)
+VALUES(4040, "ESTADISTICA");
+
+INSERT INTO asignatura(id,descripcion)
+VALUES(6060, "FILOSOFIA");
+
+
+
+-------------------OBRA SOCIAL---------------------------
+
+INSERT INTO obra_social(id,descripcion,horas,estudiante_id)
+VALUES(1150, "HOGAR ANCIANOS", 4, 1000);
+
+INSERT INTO obra_social(id,descripcion,horas,estudiante_id)
+VALUES(1050, "COMEDOR COMUNITARIO", 6, 1000);
+
+INSERT INTO obra_social(id,descripcion,horas,estudiante_id)
+VALUES(1714, "CANTAR", 1, 1004);
+
+INSERT INTO obra_social(id,descripcion,horas,estudiante_id)
+VALUES(1100, "AUXILIAR VETERINARIO", 3, 1004);
+
+INSERT INTO obra_social(id,descripcion,horas,estudiante_id)
+VALUES(1100, "AUXILIAR VETERINARIO", 4, 1001);
+
+INSERT INTO obra_social(id,descripcion,horas,estudiante_id)
+VALUES(1000, "COMEDOR COMUNITARIO", 3, 1001);
+
+INSERT INTO obra_social(id,descripcion,horas,estudiante_id)
+VALUES(0250, "RECOLECTAR BASURA", 2, 1002);
+
+INSERT INTO obra_social(id,descripcion,horas,estudiante_id)
+VALUES(1714, "CANTAR", 4, 1002);
+
+INSERT INTO obra_social(id,descripcion,horas,estudiante_id)
+VALUES(0050, "HOGAR ANCIANOS", 2, 1003);
+
+INSERT INTO obra_social(id,descripcion,horas,estudiante_id)
+VALUES(3650, "RECOLECTAR BASURA", 5, 1003);
+
+
+--------------------NOTAS----------------------------
+
+INSERT INTO notas(id,estudiante_id,nota, asignatura_id, f_examen)
+VALUES(0010,1000,78,1010,"2019/04/15");
+
+INSERT INTO notas(id,estudiante_id,nota, asignatura_id, f_examen)
+VALUES(0011,1000,80,2020,"2020/04/15");
+
+INSERT INTO notas(id,estudiante_id,nota, asignatura_id, f_examen)
+VALUES(0013,1000,75,3030,"2022/08/15");
+
+INSERT INTO notas(id,estudiante_id,nota, asignatura_id, f_examen)
+VALUES(0014,1000,69,4040,"2019/04/17");
+
+INSERT INTO notas(id,estudiante_id,nota, asignatura_id, f_examen)
+VALUES(0015,1000,88,6060,"2020/02/17");
+******
+INSERT INTO notas(id,estudiante_id,nota, asignatura_id, f_examen)
+VALUES(0020,1001,55,1010,"2019/04/02");
+
+INSERT INTO notas(id,estudiante_id,nota, asignatura_id, f_examen)
+VALUES(0021,1001,78,2020,"2020/09/10");
+
+INSERT INTO notas(id,estudiante_id,nota, asignatura_id, f_examen)
+VALUES(0023,1001,69,3030,"2022/04/01");
+
+INSERT INTO notas(id,estudiante_id,nota, asignatura_id, f_examen)
+VALUES(0024,1001,69,6060,"2020/07/23");
+*****
+INSERT INTO notas(id,estudiante_id,nota, asignatura_id, f_examen)
+VALUES(0030,1002,85,2020,"2022/01/02");
+
+INSERT INTO notas(id,estudiante_id,nota, asignatura_id, f_examen)
+VALUES(0031,1002,80,4040,"2022/03/01");
+
+INSERT INTO notas(id,estudiante_id,nota, asignatura_id, f_examen)
+VALUES(0033,1002,90,3030,"2022/03/30");
+*****
+INSERT INTO notas(id,estudiante_id,nota, asignatura_id, f_examen)
+VALUES(0040,1003,66,1010,"2020/11/12");
+
+INSERT INTO notas(id,estudiante_id,nota, asignatura_id, f_examen)
+VALUES(0041,1003,61,6060,"2019/06/06");
+
+
+
+SELECT * FROM estudiante;
+
+SELECT * FROM notas;
+
+SELECT * FROM asignatura;
+
+SELECT * FROM obra_social;
+
+
+
+SELECT notas.estudiante_id, notas.nota, asignatura.descripcion
+FROM notas
+INNER JOIN asignatura ON asignatura.id = notas.asignatura_id;
+
+
+SELECT estudiante.nombre, obra_social.descripcion
+FROM obra_social
+INNER JOIN estudiante ON obra_social.estudiante_id = estudiante.id;
+
+
+SELECT estudiante.nombre, notas.nota, notas.asignatura_id
+FROM estudiante
+INNER JOIN notas ON notas.estudiante_id = estudiante.id;
+
+
+SELECT estudiante.nombre, notas.nota, asignatura.descripcion
+FROM ((notas
+INNER JOIN estudiante ON notas.estudiante_id = estudiante.id)
+INNER JOIN asignatura ON asignatura.id = notas.asignatura_id);
+
+
+SELECT estudiante.nombre, notas.nota, asignatura.descripcion
+FROM ((notas
+INNER JOIN estudiante ON notas.estudiante_id = estudiante.id)
+INNER JOIN asignatura ON asignatura.id = notas.asignatura_id)
+ORDER BY nombre ASC;
+
+
+
+UPDATE notas
+SET nota = 65
+WHERE id >= 10 AND id < 15;
+
+
+UPDATE notas
+SET nota = 65
+WHERE id > 11 AND id <= 24;
+
+
+UPDATE obra_social
+SET horas = 10 - 2
+WHERE id > 100 AND id <= 1075;
+
+
+UPDATE obra_social
+SET horas = horas + 3
+WHERE estudiante_id = 1003;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+UPDATE estudiante
+SET f_nacimiento = "1999/02/22"
+WHERE id = 1001;
+
+UPDATE estudiante
+SET f_nacimiento = "1998/11/4"
+WHERE id = 1002;
+
+UPDATE estudiante
+SET f_nacimiento = "1999/1/17"
+WHERE id = 1003;
+
+
+
+
+
+
+
+
+

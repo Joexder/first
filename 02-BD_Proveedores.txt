@@ -1,0 +1,61 @@
+CREATE DATABASE proveedores;
+USE proveedores;
+
+CREATE TABLE categoria(
+codigo INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+nombre VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE pieza(
+codigo INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+nombre VARCHAR(100) NOT NULL,
+color VARCHAR(50) NOT NULL,
+precio DECIMAL(7,2) NOT NULL,
+codigo_categoria INT UNSIGNED NOT NULL,
+FOREIGN KEY (codigo_categoria) REFERENCES categoria(codigo)
+ON DELETE  CASCADE
+ON UPDATE CASCADE
+);
+
+
+
+INSERT INTO categoria VALUES(1, 'CATEGORIA A');
+INSERT INTO categoria VALUES(2, 'CATEGORIA B');
+INSERT INTO categoria VALUES(3, 'CATEGORIA C');
+
+
+INSERT INTO pieza VALUES(1,'Pieza 1','Blanco',25.90,1);
+INSERT INTO pieza VALUES(2,'Pieza 2','Verde',32.75,1);
+INSERT INTO pieza VALUES(3,'Pieza 3','Rojo',12.00,3);
+INSERT INTO pieza VALUES(4,'Pieza 5','Azul',24.50,2);
+INSERT INTO pieza VALUES(5,'Pieza 6','Gris',30.00,3);
+INSERT INTO pieza VALUES(6,'Pieza 4','Morado',5.50,3);
+
+
+UPDATE categoria
+SET nombre = 'CATEGORIA C'
+WHERE codigo = 3;
+
+
+
+¿Podríamos borrar la Categoría A de la tabla categoria? 
+	Sí podemos borrar la CATEGORIA A de la tabla categoria
+¿Y la Categoría C?
+	Sí podemos borrar la CATEGORIA C de la tabla categoria
+¿Qué les ocurre a las piezas que pertenecen la Categoría A después de borrarla?
+	Se borran las piezas que pertenecen a esta categoría
+¿Podríamos actualizar la Categoría A de la tabla categoria? 
+	Sí podemos actualizar esta categoría
+¿Qué les ocurre a las piezas que pertenecen la Categoría A después de actualizarla? 
+	El unico dato que se ve afectado es la llave foranea (codigo_categoria) 
+	que en caso se de modificarlo, este se actualiza automaticamente en esta tabla
+Actualice la categoría “Categoria C” por: “Presidencial”
+	UPDATE categoria 
+	SET nombre = 'Presidencial'
+	WHERE codigo = 3;
+Insertar la pieza “Pieza de lujo”, precio de 120.00 Bs. Por noche y que pertenezca a la categoría “Presidencial” 
+	INSERT INTO pieza(nombre,color,precio,codigo_categoria) 
+	VALUES('Pieza de Lujo','Noche',120.00,3);
+Inserte una nueva categoría denominado “Super VIP"
+	INSERT INTO categoria 
+	VALUES(4, 'Super VIP');

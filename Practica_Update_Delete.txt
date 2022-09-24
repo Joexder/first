@@ -1,0 +1,42 @@
+-----------DELETE SQL-------------------
+DELETE FROM table_nambe WHERE cond;
+
+DELETE FROM obra_social 
+WHERE descripcion = "CANTAR";
+
+INSERT INTO obra_social(id,descripcion,horas,estudiante_id)
+VALUES (135,"AUXILIAR",9,1002);
+
+SELECT * FROM obra_social
+ORDER BY estudiante_id ASC;
+
+SELECT descripcion, COUNT(*) AS cantidad
+FROM obra_social
+GROUP BY descripcion;
+
+UPDATE obra_social
+SET horas = horas + 5
+WHERE horas < 3;
+
+DELETE FROM obra_social 
+WHERE id >98 and id<462;
+
+INSERT INTO obra_social(id,descripcion,horas,estudiante_id)
+VALUES (765,"RECOLECTAR BASURA",3,1002);
+
+INSERT INTO obra_social(id,descripcion,horas,estudiante_id)
+VALUES (354,"RECOLECTAR BASURA",2,1003);
+
+SELECT * FROM obra_social
+ORDER BY estudiante_id ASC;
+
+UPDATE obra_social
+SET horas = horas - 2
+WHERE horas > 3;
+
+SELECT AVG(horas) FROM obra_social;
+SELECT AVG(nota) FROM notas;
+
+UPDATE notas
+SET nota = nota + 33
+WHERE id<29 and id >16;

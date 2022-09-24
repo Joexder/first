@@ -1,0 +1,101 @@
+DELETE FROM productos
+WHERE codproducto = "456";
+
+DELETE FROM productos
+WHERE codproducto = "0";
+
+
+
+INSERT INTO ventas 
+VALUES(01245, "2022/01/22", 125.3, "Gomez");
+
+INSERT INTO ventas 
+VALUES(2415, "2022/07/17", 125.3, "Dolores");
+
+INSERT INTO ventas 
+VALUES(75345, "2022/04/6", 125.3, "Paz");
+
+INSERT INTO ventas 
+VALUES(31687, "2022/10/02", 125.3, "Arteaga");
+
+
+1245	058
+2415	145
+31687	32
+75345	321
+
+
+INSERT INTO detallesventa
+VALUES("321", 1245, 5, 1.25, 6.25);
+
+INSERT INTO detallesventa
+VALUES("32", 1245, 4, 3.6, 13.05);
+
+INSERT INTO detallesventa
+VALUES("058", 75345, 20, 2.00, 50.62);
+
+INSERT INTO detallesventa
+VALUES("32", 31687, 3, 3.75, 17);
+
+INSERT INTO detallesventa
+VALUES("145", 2415, 1, 15, 15.9);
+
+UPDATE detallesventa
+SET cantidad = 15
+WHERE nroventa = 75345;
+SELECT snacionalidad, count(*)
+FROM tblpeliculas
+GROUP BY snacionalidad;
+
+
+
+---------------------------FUNCIONES AGREGADAS--------------------------------
+
+SELECT snacionalidad, SUM(lpelicula_id) as "Suma ID", 
+count(*) as "Total nacionalidades",
+MAX(lpelicula_id) AS "ID maximo",
+MIN(lpelicula_id) AS "ID minimo",
+AVG(lpelicula_id) AS "Promedio"
+FROM tblpeliculas
+GROUP BY snacionalidad;
+
+
+SELECT sgenero, COUNT(*) as "Cantidad Genero"
+FROM tblpeliculas
+INNER JOIN valgeneros ON tblpeliculas.lgenero_id = valgeneros.lgenero_id
+GROUP BY sgenero;
+
+
+SELECT sgenero, COUNT(*) as "Cantidad Genero"
+FROM tblpeliculas, valgeneros
+WHERE valgeneros.lgenero_id = tblpeliculas.lgenero_id
+GROUP BY sgenero
+UNION
+SELECT "Total: ", COUNT(lpelicula_id) FROM tblpeliculas;
+
+
+SELECT sidioma, COUNT(*) as "Cantidad idiomas"
+FROM tblcopias
+GROUP BY sidioma
+UNION
+SELECT "Total Idiomas:", COUNT(*) FROM tblcopias;
+
+
+
+***************************TAREA*******************************************
+*									  *
+*	cliente	 	total_peliculas		 total_pagado		  *
+*									  *
+***************************************************************************
+
+
+SELECT CONCAT(snombre, " ", sappaterno) AS "Cliente",
+SUM(lcantidad) as "Total Peliculas",
+SUM(lcosto + lmulta) AS "Total Pagar"
+FROM tblsocios AS s, tblalquilercopia AS a
+WHERE s.lsocio_id = a.lsocio_id
+GROUP BY Cliente;
+
+
+SELECT SUM(lcosto) FROM tblalquilercopia;
+

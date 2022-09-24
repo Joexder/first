@@ -1,0 +1,75 @@
+CREATE DATABASE dbCapacitacion;
+USE dbCapacitacion;
+
+CREATE TABLE Empleados(
+codigo INT AUTO_INCREMENT PRIMARY KEY,
+nombre VARCHAR(25) NOT NULL,
+salario DECIMAL(7,2),
+nif INT NOT NULL 
+);
+
+CREATE TABLE Cursos(
+codigo INT AUTO_INCREMENT PRIMARY KEY,
+nombre VARCHAR(50),
+n_horas INT NOT NULL
+);
+
+CREATE TABLE Reciben(
+codigo_empleado INT,
+codigo_curso INT,
+f_inicio DATETIME,
+PRIMARY KEY(codigo_empleado, codigo_curso),
+FOREIGN KEY(codigo_empleado) REFERENCES Empleados(codigo)
+ON DELETE  CASCADE
+ON UPDATE CASCADE,
+FOREIGN KEY(codigo_curso) REFERENCES Cursos(codigo)
+ON DELETE  CASCADE
+ON UPDATE CASCADE
+);
+
+
+/*---------------------5 EMPLEADOS----------------------------*\
+INSERT INTO empleados 
+VALUES(20, 'James Perez', 2785.09, 78942);
+
+INSERT INTO empleados 
+VALUES(22,'Marta Mercedes', 3000.00, 84751);
+
+INSERT INTO empleados 
+VALUES(21, 'Andres Calamontes', 1543.32, 125547);
+
+INSERT INTO empleados 
+VALUES(23, 'Anibal Candia', 2400, 35424);
+
+INSERT INTO empleados 
+VALUES(24, 'Jessica Moraes', 1486.325, 54315);
+
+
+
+
+/*---------------------3 CURSOS----------------------------*\
+INSERT INTO cursos
+VALUES(1, 'Empredinmiento', 10);
+
+INSERT INTO cursos
+VALUES(2, 'TIC Informaticas', 16);
+
+INSERT INTO cursos
+VALUES(3, 'Manejo de Recursos Biodegradables', 20);
+
+
+
+INSERT INTO reciben
+VALUES(22, 1, '2019/08/12');
+
+INSERT INTO reciben
+VALUES(20, 3, '2022/1/30');
+
+INSERT INTO reciben
+VALUES(24, 2, '2020/09/01');
+
+INSERT INTO reciben
+VALUES(21, 2, '2022/07/03 15:30:00');
+
+INSERT INTO reciben
+VALUES(23, 1, '2020/09/01 20:40:00');

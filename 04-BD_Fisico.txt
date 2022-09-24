@@ -1,0 +1,51 @@
+CREATE DATABASE DB_Fisico;
+USE DB_Fisico;
+
+CREATE TABLE personas(
+id_persona INT PRIMARY KEY,
+nombre VARCHAR(30) NOT NULL,
+apellido VARCHAR(35) NOT NULL,
+rut VARCHAR(30),
+UNIQUE(rut)
+);
+
+CREATE TABLE alumnos(
+id_alumno INT AUTO_INCREMENT PRIMARY KEY,
+id_persona INT,
+carrera VARCHAR(35) NOT NULL,
+facultad VARCHAR(35) NOT NULL,
+FOREIGN KEY(id_persona) REFERENCES personas(id_persona)
+);
+
+CREATE TABLE docentes(
+id_docente INT AUTO_INCREMENT PRIMARY KEY,
+id_persona INT,
+tipo_contrato VARCHAR(20) NOT NULL,
+FOREIGN KEY(id_persona) REFERENCES personas(id_persona)
+);
+
+CREATE TABLE matriculas(
+id_matricula INT PRIMARY KEY,
+id_alumno INT,
+grado VARCHAR(30),
+fecha DATE,
+FOREIGN KEY(id_alumno) REFERENCES alumnos(id_alumno)
+);
+
+CREATE TABLE cursos(
+id_curso INT PRIMARY KEY,
+id_docente INT,
+nombre_curso VARCHAR(50) NOT NULL,
+hora INTEGER,
+UNIQUE(nombre_curso),
+FOREIGN KEY(id_docente) REFERENCES docentes(id_docente)
+);
+
+CREATE TABLE cursos_alumnos(
+id_curso INT,
+id_alumno INT,
+nota VARCHAR(60) NOT NULL,
+PRIMARY KEY(id_curso, id_alumno),
+FOREIGN KEY(id_curso) REFERENCES cursos(id_curso),
+FOREIGN KEY(id_alumno) REFERENCES alumnos(id_alumno)
+);

@@ -1,0 +1,30 @@
+CREATE DATABASE bdVentas;
+USE bdVentas;
+
+CREATE TABLE Productos(
+codProducto VARCHAR(10) PRIMARY KEY,
+nomProducto VARCHAR(25) NOT NULL,
+precio NUMERIC(5,2) NOT NULL,
+stock INT,
+estado INT);
+
+CREATE TABLE Ventas(
+nroVenta INT PRIMARY KEY,
+fecha DATE,
+total NUMERIC(5,2) NOT NULL,
+cliente VARCHAR(25));
+
+CREATE TABLE DetallesVenta(
+codProducto VARCHAR(10),
+nroVenta INT,
+cantidad INT,
+precio NUMERIC(5,2) NOT NULL,
+subtotal NUMERIC(5,2) NOT NULL,
+PRIMARY KEY(codProducto, nroVenta),
+FOREIGN KEY(codProducto) REFERENCES Productos(codProducto),
+FOREIGN KEY(nroVenta) REFERENCES Ventas(nroVenta)
+);
+
+SELECT * FROM Productos;
+ALTER TABLE DetallesVentas MODIFY PRIMARY KEY(codProducto, nroVenta);
+ALTER TABLE
